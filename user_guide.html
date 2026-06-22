@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hướng Dẫn Sử Dụng - Portal Săn Tin Tuyển Dụng Xây Dựng & Năng Lượng Tái Tạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #09090b;
+      --bg-surface: #0c0c0f;
+      --bg-card: #13131a;
+      --border-color: #22222d;
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      
+      --color-zalo: #06b6d4;
+      --color-linkedin: #0077b5;
+      --color-facebook: #1877f2;
+      --color-hse: #f59e0b;
+      --color-pm: #a855f7;
+      --color-sm: #3b82f6;
+      --color-success: #10b981;
+      
+      --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+      --gradient-zalo: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Abstract Decorative Glows */
+    .glow-orb {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+      top: -100px;
+      right: -100px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .glow-orb-2 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+      bottom: 20%;
+      left: -200px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Layout Wrapper */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    /* Header Section */
+    header {
+      text-align: center;
+      margin-bottom: 70px;
+      position: relative;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(59,130,246,0.1) 0%, rgba(168,85,247,0.1) 100%);
+      border: 1px solid rgba(168,85,247,0.3);
+      color: #c084fc;
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    header h1 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, #ffffff, #a1a1aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Interactive Pipeline Roadmap Flowchart */
+    .pipeline-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 60px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title svg {
+      color: var(--color-sm);
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-cols: 1;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 30px;
+      position: relative;
+    }
+
+    .pipeline-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pipeline-step:hover {
+      transform: translateY(-5px);
+      border-color: #3b82f6;
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.05);
+    }
+
+    .step-number {
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gradient-accent);
+      color: white;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(168,85,247,0.4);
+      font-size: 14px;
+    }
+
+    .step-icon {
+      margin-bottom: 18px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3b82f6;
+    }
+
+    .pipeline-step:hover .step-icon {
+      background: rgba(59, 130, 246, 0.1);
+      color: #60a5fa;
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Core Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      header h1 {
+        font-size: 32px;
+      }
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 35px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .feature-card:hover {
+      border-color: #3b82f6;
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .feature-icon-wrapper {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-title-text h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .feature-title-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .feature-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .feature-body ul {
+      margin-top: 15px;
+      padding-left: 20px;
+    }
+
+    .feature-body li {
+      margin-bottom: 8px;
+      position: relative;
+      list-style-type: none;
+      padding-left: 8px;
+    }
+
+    .feature-body li::before {
+      content: "";
+      position: absolute;
+      left: -12px;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-sm);
+    }
+
+    /* Branded Accent Colors for Features */
+    .feat-zalo .feature-icon-wrapper {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--color-zalo);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+    .feat-zalo .feature-body li::before {
+      background: var(--color-zalo);
+    }
+
+    .feat-roles .feature-icon-wrapper {
+      background: rgba(168, 85, 247, 0.1);
+      color: var(--color-pm);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+    .feat-roles .feature-body li::before {
+      background: var(--color-pm);
+    }
+
+    .feat-simulator .feature-icon-wrapper {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--color-success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .feat-simulator .feature-body li::before {
+      background: var(--color-success);
+    }
+
+    .feat-kpi .feature-icon-wrapper {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--color-hse);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    .feat-kpi .feature-body li::before {
+      background: var(--color-hse);
+    }
+
+    /* Vercel Deployment Section - Visual Roadmap Timeline */
+    .deploy-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 60px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 30px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--border-color);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -30px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 3px solid #3b82f6;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s ease;
+    }
+
+    .timeline-content:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .timeline-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .timeline-title span {
+      background: rgba(59, 130, 246, 0.1);
+      color: #60a5fa;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .code-block {
+      background: #060608;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #c084fc;
+      overflow-x: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .code-block button {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .code-block button:hover {
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+
+    /* Warning/Information Callout */
+    .callout {
+      background: rgba(245, 158, 11, 0.05);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      margin-top: 25px;
+    }
+
+    .callout-icon {
+      color: var(--color-hse);
+      font-size: 20px;
+    }
+
+    .callout-text h5 {
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .callout-text p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* QA Section Accordion */
+    .qa-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--border-color);
+      padding: 15px 0;
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-header {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .accordion-header:hover {
+      color: #60a5fa;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+      color: var(--text-secondary);
+      font-size: 14px;
+      padding-right: 20px;
+    }
+
+    .accordion-content.active {
+      max-height: 1000px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      transition: max-height 0.5s ease-in-out;
+    }
+
+    .arrow-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .arrow-icon.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Footer styling */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb"></div>
+  <div class="glow-orb-2"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="badge-top">HƯỚNG DẪN CẤP CAO</div>
+      <h1>Portal Săn Tin Tuyển Dụng Xây Dựng & Năng Lượng</h1>
+      <p>Cẩm nang vận hành nền tảng tracking tin tuyển dụng thời gian thực từ các nguồn mạng xã hội (Facebook, LinkedIn, Zalo) và các website tìm việc hàng đầu Việt Nam.</p>
+    </header>
+
+    <!-- Pipeline Roadmap Flowchart -->
+    <section class="pipeline-section">
+      <div class="section-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Luồng Hoạt Động Của Hệ Thống (Workflow)
+      </div>
+      <div class="pipeline-grid">
+        <!-- Step 1 -->
+        <div class="pipeline-step">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <h4 class="step-title">Quét tin (Scraping)</h4>
+          <p class="step-desc">Sử dụng Exa Search API để dorking, cào tin tuyển dụng có lọc ưu tiên nền tảng (Zalo, LinkedIn, Facebook, VN Boards).</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="pipeline-step">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4 class="step-title">Phân Loại Tự Động</h4>
+          <p class="step-desc">Bộ lọc heuristic của backend phân loại vai trò (Site Manager, Project Manager, HSE) và trích xuất thông tin liên hệ.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="pipeline-step">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+          </div>
+          <h4 class="step-title">Thêm vào Board</h4>
+          <p class="step-desc">Click "+ Add to Board" để lưu trực tiếp vào danh sách theo dõi chung và cập nhật biểu đồ thống kê KPI tự động.</p>
+        </div>
+        <!-- Step 4 -->
+        <div class="pipeline-step">
+          <div class="step-number">4</div>
+          <div class="step-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h4 class="step-title">Liên hệ trực tiếp</h4>
+          <p class="step-desc">Gửi Email, Gọi điện, Inbox Facebook, hoặc bắt đầu chat Zalo chỉ với một cú click chuột từ Panel Chi tiết.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features Infographic -->
+    <div class="features-grid">
+      <!-- Feature 1: Zalo -->
+      <div class="feature-card feat-zalo">
+        <div class="feature-header">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="feature-title-text">
+            <h3>Hệ Thống Quét Zalo</h3>
+            <p>Giải pháp tạm thời khi chờ OA</p>
+          </div>
+        </div>
+        <div class="feature-body">
+          <p>Vì tin tuyển dụng của người dùng nằm rải rác trên Zalo, hệ thống xây dựng cơ chế dorking nâng cao:</p>
+          <ul>
+            <li><strong>Bộ quét Zalo Priority:</strong> Tìm kiếm các link liên kết nhóm Zalo (`zalo.me/g/`) hoặc Zalo cá nhân được chia sẻ công khai trên Facebook và LinkedIn.</li>
+            <li><strong>Sanitize số điện thoại Zalo:</strong> Tự động lọc sạch ký tự thừa để tạo link trực tiếp dạng `https://zalo.me/<sdt>`.</li>
+            <li><strong>Nút chat nhanh:</strong> Một click mở ngay ứng dụng Zalo để bắt đầu trò chuyện với HR.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 2: Role Tabs -->
+      <div class="feature-card feat-roles">
+        <div class="feature-header">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="feature-title-text">
+            <h3>Phân Loại Vai Trò</h3>
+            <p>Site Manager • PM • HSE</p>
+          </div>
+        </div>
+        <div class="feature-body">
+          <p>Quản lý đa mục tiêu nhờ bộ chuyển tab tiện lợi, phân tách rõ ràng 3 vị trí then chốt của ngành xây dựng:</p>
+          <ul>
+            <li><strong>Phân loại Heuristic:</strong> Backend tự động quét chức danh để gắn nhãn danh mục việc làm chính xác.</li>
+            <li><strong>Đồng bộ từ khóa Scraper:</strong> Chuyển tab sẽ tự động đổi từ khóa mặc định tương ứng (ví dụ: tab HSE đổi từ khóa scraper thành `"HSE construction"`).</li>
+            <li><strong>Mã màu nhận diện:</strong> Badge màu sắc hiển thị tức thì trên bảng chính giúp theo dõi trực quan.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 3: Simulator -->
+      <div class="feature-card feat-simulator">
+        <div class="feature-header">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="feature-title-text">
+            <h3>Social Post Simulator</h3>
+            <p>Vượt rào cản bài viết bị chặn</p>
+          </div>
+        </div>
+        <div class="feature-body">
+          <p>Khi các đường link gốc bị khóa quyền riêng tư hoặc lỗi hiển thị trên Facebook/LinkedIn:</p>
+          <ul>
+            <li><strong>Lưu trữ bộ đệm (Caching):</strong> Portal hiển thị toàn bộ nội dung bài đăng gốc được cào về dưới dạng mô phỏng giao diện Facebook/LinkedIn thật.</li>
+            <li><strong>Sao chép một chạm:</strong> Nhấp nút "Copy Text" để sao chép nhanh toàn bộ yêu cầu tuyển dụng để lưu trữ hoặc chia sẻ.</li>
+            <li><strong>An toàn thông tin:</strong> Xem bài đăng mà không lo bị hạn chế bởi cơ chế chặn IP từ trình duyệt.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 4: Interactive KPI -->
+      <div class="feature-card feat-kpi">
+        <div class="feature-header">
+          <div class="feature-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="feature-title-text">
+            <h3>Dashboard Tương Tác</h3>
+            <p>Biểu đồ ECharts động</p>
+          </div>
+        </div>
+        <div class="feature-body">
+          <p>Giám sát tổng thể thị trường tuyển dụng điện gió và hạ tầng năng lượng:</p>
+          <ul>
+            <li><strong>Chỉ số nguồn tin:</strong> 4 thẻ KPI thống kê riêng lượng tin từ LinkedIn (LI), Facebook (FB), Zalo (ZL), và các trang VN Boards.</li>
+            <li><strong>Phân bố địa lý và công ty:</strong> Biểu đồ cột ngang và hình tròn thể hiện vùng trọng điểm và nhà tuyển dụng năng động nhất.</li>
+            <li><strong>Đồng bộ động:</strong> Biểu đồ tự vẽ lại tức thì khi bạn cào thêm tin tuyển dụng mới.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vercel Deployment Flow Timeline -->
+    <section class="deploy-section">
+      <div class="section-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        Lộ Trình Triển Khai Lên Vercel (Dành Cho Dự Án Monorepo)
+      </div>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Kho lưu trữ chứa cả mã nguồn Frontend và Backend. Khi đưa lên Vercel, chúng ta chỉ cần chạy riêng phần Frontend tĩnh để giao diện hoạt động ổn định và kết nối về API.</p>
+      
+      <div class="timeline">
+        <!-- Item 1 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">Bước 1: Đẩy mã nguồn lên GitHub <span>Bắt buộc</span></h4>
+            <p class="timeline-desc">Thực hiện đẩy phiên bản mới nhất từ máy local của bạn lên kho lưu trữ GitHub của bạn:</p>
+            <div class="code-block">
+              <span>git push -u origin main</span>
+              <button onclick="copyCode(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+        <!-- Item 2 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">Bước 2: Cài Đặt Dự Án Trên Vercel <span>Thao tác trên Web</span></h4>
+            <p class="timeline-desc">Truy cập Vercel, bấm **Add New > Project**, liên kết tài khoản GitHub và chọn repo **jobs** của bạn.</p>
+          </div>
+        </div>
+        <!-- Item 3 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">Bước 3: Chỉ Định Root Directory Cho Frontend <span>Quan trọng bậc nhất</span></h4>
+            <p class="timeline-desc">Nhấp nút **Edit** tại mục **Root Directory** và trỏ đường dẫn tới thư mục **`frontend`** (thay vì thư mục gốc `./`). Vercel sẽ tự động phát hiện cấu hình là ứng dụng **Vite**.</p>
+          </div>
+        </div>
+        <!-- Item 4 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">Bước 4: Nhấp Deploy <span>Hoàn tất</span></h4>
+            <p class="timeline-desc">Hệ thống sẽ biên dịch ứng dụng React và cấp cho bạn một domain public dạng `.vercel.app` để truy cập tức thì.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-text">
+          <h5>Lưu ý về Deploy Backend API</h5>
+          <p>Do phần Scraper backend cần sử dụng API Exa Search và chạy các lệnh CLI riêng biệt, bạn nên chạy backend trên máy tính cá nhân (local) hoặc đưa lên các nền tảng server chuyên nghiệp như Railway/Render, sau đó thiết lập biến môi trường <code>VITE_API_URL</code> trong phần Settings của dự án Vercel trỏ về link API đó.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QA Accordion Section -->
+    <section class="qa-section">
+      <div class="section-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Câu Hỏi Thường Gặp (Q&A)
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Làm cách nào để đổi từ khóa quét mặc định của từng tab?
+          <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content">
+          Từ khóa mặc định được quản lý tại hàm <code>useEffect</code> của tệp <code>App.jsx</code> dòng 132-142. Bạn có thể dễ dàng thay đổi chuỗi truy vấn cho từng trường hợp như <code>Site Manager</code>, <code>Project Manager</code>, <code>HSE</code> trực tiếp trong mã nguồn để điều hướng Scraper.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Tại sao nút "Open Zalo Chat" báo số điện thoại không tồn tại?
+          <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content">
+          Hãy đảm bảo số điện thoại trên bài đăng tuyển dụng gốc được điền đúng chuẩn số điện thoại cá nhân tại Việt Nam. Nút bấm sử dụng link chuyển tiếp <code>https://zalo.me/&lt;sđt&gt;</code>, nếu số điện thoại không được đăng ký Zalo hoặc bị ẩn tìm kiếm, Zalo sẽ báo lỗi không tìm thấy người dùng.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Chế độ offline (Fallback local) hoạt động thế nào?
+          <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content">
+          Khi không thể kết nối tới server API chạy ở cổng 8000, giao diện Frontend sẽ tự động chuyển sang cơ chế Mô Phỏng (Local Simulator) chạy ngay trong trình duyệt. Trình giả lập sẽ tải lên bộ danh sách việc làm mẫu trong bộ nhớ để các hoạt động lọc, phân tab, và tìm kiếm thông tin không bị gián đoạn.
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      Hệ Thống Săn Tin Xây Dựng & Năng Lượng Tái Tạo © 2026. Phát triển bởi Antigravity.
+    </footer>
+  </div>
+
+  <script>
+    function toggleAccordion(btn) {
+      const content = btn.nextElementSibling;
+      const arrow = btn.querySelector('.arrow-icon');
+      
+      content.classList.toggle('active');
+      arrow.classList.toggle('rotated');
+    }
+
+    function copyCode(btn) {
+      const text = btn.previousElementSibling.innerText;
+      navigator.clipboard.writeText(text);
+      btn.innerText = "Copied!";
+      setTimeout(() => {
+        btn.innerText = "Copy";
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
