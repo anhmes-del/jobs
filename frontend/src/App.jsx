@@ -99,32 +99,16 @@ export default function App() {
 
   // Simulates data filtering on frontend if backend is offline
   const simulateLocalFetch = () => {
-    const baseMockJobs = [
-      { id: "job_001", title: "Wind Farm Site Manager (Turbine Installation)", company: "Vestas Wind Systems", platform: "LinkedIn", location: "Tra Vinh, Vietnam", role: "Site Manager", recruiter_name: "Nguyen Minh Thu (Senior Talent Acquisition)", recruiter_profile: "#", post_url: "#", post_date: "Jun 20, 2026", raw_text: "Vestas Tra Vinh project looking for Site Manager.", key_requirements: ["5+ years wind power experience", "GWO certifications"], project_type: "Nearshore", salary: "USD 3,500 - 4,500", contact_info: "nmt-recruitment@vestas.com" },
-      { id: "job_002", title: "Site Manager - Dự án Điện Gió Tra Vinh (Nearshore)", company: "Goldwind Vietnam", platform: "Facebook", location: "Tra Vinh, Vietnam", role: "Site Manager", recruiter_name: "Tran Quoc Tuan (HR Manager)", recruiter_profile: "#", post_url: "#", post_date: "Jun 21, 2026", raw_text: "Tuyển Site Manager cho dự án Trà Vinh.", key_requirements: ["3+ years wind site management", "GWO certified"], project_type: "Nearshore", salary: "Up to 70,000,000 VND", contact_info: "tuan.tran@goldwind.com.vn" },
-      { id: "job_011", title: "Wind Project Manager (Renewables Portfolio)", company: "Vestas Wind Systems", platform: "LinkedIn", location: "Hanoi, Vietnam", role: "Project Manager", recruiter_name: "Nguyen Minh Thu (Senior Talent Acquisition)", recruiter_profile: "#", post_url: "#", post_date: "Jun 20, 2026", raw_text: "Vestas is looking for a Wind Project Manager.", key_requirements: ["8+ years project management", "PMP certified"], project_type: "Onshore", salary: "USD 5,000 - 7,000", contact_info: "nmt-recruitment@vestas.com" },
-      { id: "job_012", title: "Giám Đốc Dự Án Xây Dựng Hạ Tầng Điện Gió", company: "Trung Nam Group", platform: "VietnamWorks", location: "Ninh Thuan, Vietnam", role: "Project Manager", recruiter_name: "Le Hoang Nam (HR Lead)", recruiter_profile: "#", post_url: "#", post_date: "Jun 18, 2026", raw_text: "Trung Nam Group tuyển Giám Đốc Dự Án điện gió.", key_requirements: ["5+ years wind power PM", "Hạ tầng kỹ thuật & pháp lý"], project_type: "Onshore", salary: "Up to 80,000,000 VND", contact_info: "tuyendung@trungnamgroup.com.vn" },
-      { id: "job_015", title: "HSE Manager (Dự Án Điện Gió Ngoài Khơi)", company: "PTSC", platform: "LinkedIn", location: "Vung Tau, Vietnam", role: "HSE", recruiter_name: "Vu Van Hieu (Talent Acquisition)", recruiter_profile: "#", post_url: "#", post_date: "Jun 19, 2026", raw_text: "Lead HSE Manager for our offshore wind farm.", key_requirements: ["5+ years offshore HSE", "NEBOSH certified"], project_type: "Offshore", salary: "Negotiable", contact_info: "recruitment@ptsc.com.vn" },
-      { id: "job_016", title: "Kỹ Sư An Toàn Lao Động (HSE Officer)", company: "Fecon Corporation", platform: "TopCV", location: "Quang Tri, Vietnam", role: "HSE", recruiter_name: "Phan Hoang Minh (HR)", recruiter_profile: "#", post_url: "#", post_date: "Jun 17, 2026", raw_text: "FECON cần tuyển Kỹ sư An toàn Lao động.", key_requirements: ["3+ years construction safety", "HSE state certificate"], project_type: "Onshore", salary: "25 - 35M VND", contact_info: "tuyendung@fecon.com.vn" },
-      { id: "job_019", title: "Chỉ Huy Trưởng / Site Manager Điện Gió (Nhóm Zalo)", company: "Trung Nam Group", platform: "Zalo", location: "Ninh Thuan, Vietnam", role: "Site Manager", recruiter_name: "Le Hoang Nam (Nhóm Zalo Tuyển Dụng)", recruiter_profile: "#", post_url: "#", post_date: "Jun 21, 2026", raw_text: "Trung Nam cần tuyển Chỉ huy trưởng công trường điện gió Ninh Thuận.", key_requirements: ["4+ years wind farm site manager", "BOP & Civil works"], project_type: "Onshore", salary: "Negotiable", contact_info: "tuyendung@trungnamgroup.com.vn", zalo: "0933111222" },
-      { id: "job_020", title: "Project Manager BOP (Liên hệ Zalo Mr. Nam)", company: "Fecon Corporation", platform: "Zalo", location: "Quang Tri, Vietnam", role: "Project Manager", recruiter_name: "Phan Hoang Minh (Tuyển Dụng Zalo)", recruiter_profile: "#", post_url: "#", post_date: "Jun 22, 2026", raw_text: "FECON tuyển gấp Project Manager điều hành thi công BOP điện gió Quảng Trị.", key_requirements: ["6+ years infrastructure PM", "FIDIC contracts"], project_type: "Onshore", salary: "Negotiable", contact_info: "tuyendung@fecon.com.vn", zalo: "0984123456" }
-    ];
+    const baseMockJobs = [];
 
     let filtered = baseMockJobs;
-    if (platform !== 'All') filtered = filtered.filter(j => j.platform === platform);
-    if (location !== 'All') filtered = filtered.filter(j => j.location.includes(location));
-    if (activeRoleTab !== 'All') filtered = filtered.filter(j => j.role === activeRoleTab);
-    if (search) {
-      const q = search.toLowerCase();
-      filtered = filtered.filter(j => j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q));
-    }
     setJobs(filtered);
 
     setStats({
-      total: baseMockJobs.length,
-      platforms: [{ name: 'LinkedIn', value: 3 }, { name: 'Facebook', value: 1 }, { name: 'Zalo', value: 2 }, { name: 'TopCV', value: 1 }, { name: 'VietnamWorks', value: 1 }],
-      locations: [{ name: 'Tra Vinh', value: 2 }, { name: 'Hanoi', value: 1 }, { name: 'Ninh Thuan', value: 2 }, { name: 'Vung Tau', value: 1 }, { name: 'Quang Tri', value: 2 }],
-      project_types: [{ name: 'Nearshore', value: 2 }, { name: 'Onshore', value: 5 }, { name: 'Offshore', value: 1 }]
+      total: 0,
+      platforms: [],
+      locations: [],
+      project_types: []
     });
   };
 
