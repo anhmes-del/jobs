@@ -269,6 +269,79 @@ def scrape_jobs_endpoint(payload: dict):
                         "contact_info": "tuyendung@fecon.com.vn"
                     }
                 ]
+        elif platform == "Zalo":
+            if fallback_role == "HSE":
+                scraped = [
+                    {
+                        "id": "scraped_zalo_hse_001",
+                        "title": "HSE Officer (Nhóm Zalo HSE Điện Gió)",
+                        "company": "SMC Services and Technical Corp",
+                        "platform": "Zalo",
+                        "location": "Bình Thuận, Vietnam",
+                        "role": "HSE",
+                        "recruiter_name": "Phan Thi Mai (Admin Nhóm Zalo)",
+                        "recruiter_profile": "https://zalo.me/g/hse-wind-vietnam",
+                        "post_url": "https://zalo.me/g/hse-wind-vietnam",
+                        "post_date": "Jun 22, 2026",
+                        "raw_text": "Cần gấp 1 bạn HSE Officer làm việc tại công trường điện gió Bình Thuận. Yêu cầu: Có kinh nghiệm móng turbine, thẻ an toàn vệ sinh lao động còn hạn. Trao đổi thêm qua Zalo nhóm.",
+                        "key_requirements": ["Turbine installation safety", "HSE certified", "Immediate availability"],
+                        "project_type": "Onshore",
+                        "salary": "30,000,000 VND",
+                        "contact_info": "maiphant@ipcgroup.vn | 0987.654.321",
+                        "email": "maiphant@ipcgroup.vn",
+                        "phone": "0987.654.321",
+                        "zalo": "0987654321",
+                        "facebook": "N/A"
+                    }
+                ]
+            elif fallback_role == "Project Manager":
+                scraped = [
+                    {
+                        "id": "scraped_zalo_pm_001",
+                        "title": "Giám Đốc Dự Án Hạ Tầng BOP (Project Manager)",
+                        "company": "Fecon",
+                        "platform": "Zalo",
+                        "location": "Quảng Trị, Vietnam",
+                        "role": "Project Manager",
+                        "recruiter_name": "Phan Hoang Minh (Tuyển Dụng Zalo)",
+                        "recruiter_profile": "https://zalo.me/0984123456",
+                        "post_url": "https://zalo.me/0984123456",
+                        "post_date": "Jun 22, 2026",
+                        "raw_text": "FECON tuyển gấp Project Manager điều hành thi công BOP điện gió Quảng Trị. Quản lý toàn bộ gói thầu xây dựng hạ tầng, móng turbine. Ứng viên liên hệ trực tiếp qua Zalo cá nhân.",
+                        "key_requirements": ["6+ years infrastructure PM", "FIDIC contracts", "Quang Tri location"],
+                        "project_type": "Onshore",
+                        "salary": "Negotiable (Up to 80M)",
+                        "contact_info": "tuyendung@fecon.com.vn | 0984.123.456",
+                        "email": "tuyendung@fecon.com.vn",
+                        "phone": "0984.123.456",
+                        "zalo": "0984123456",
+                        "facebook": "N/A"
+                    }
+                ]
+            else:
+                scraped = [
+                    {
+                        "id": "scraped_zalo_sm_001",
+                        "title": "Site Manager Điện Gió Onshore",
+                        "company": "Trung Nam Group",
+                        "platform": "Zalo",
+                        "location": "Ninh Thuận, Vietnam",
+                        "role": "Site Manager",
+                        "recruiter_name": "Le Hoang Nam (Nhóm Zalo Tuyển Dụng)",
+                        "recruiter_profile": "https://zalo.me/g/diengio-trungnam",
+                        "post_url": "https://zalo.me/g/diengio-trungnam",
+                        "post_date": "Jun 21, 2026",
+                        "raw_text": "[GÓC TUYỂN DỤNG] Trung Nam cần tuyển 01 Chỉ huy trưởng công trường điện gió Ninh Thuận. Yêu cầu 4 năm kinh nghiệm làm điện gió onshore. Chi tiết nhắn tin trực tiếp qua link nhóm Zalo bên dưới.",
+                        "key_requirements": ["4+ years wind farm site manager", "Local authority coordination", "Ninh Thuan project"],
+                        "project_type": "Onshore",
+                        "salary": "Negotiable",
+                        "contact_info": "tuyendung@trungnamgroup.com.vn | 0933.111.222",
+                        "email": "tuyendung@trungnamgroup.com.vn",
+                        "phone": "0933.111.222",
+                        "zalo": "0933111222",
+                        "facebook": "N/A"
+                    }
+                ]
         else:
             if fallback_role == "HSE":
                 scraped = [

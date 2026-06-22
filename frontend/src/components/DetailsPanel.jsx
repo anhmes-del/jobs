@@ -70,7 +70,11 @@ export default function DetailsPanel({ job, onClose, isApplied, onToggleApply })
           <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide ${
             job.platform === 'LinkedIn'
               ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
-              : 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/20 dark:text-indigo-400'
+              : job.platform === 'Facebook'
+              ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/20 dark:text-indigo-400'
+              : job.platform === 'Zalo'
+              ? 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950/20 dark:text-cyan-400'
+              : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-400'
           }`}>
             {job.platform} Post
           </span>
@@ -199,9 +203,11 @@ export default function DetailsPanel({ job, onClose, isApplied, onToggleApply })
             {/* Avatar */}
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white uppercase shrink-0 ${
               job.platform === 'Facebook'
-                ? 'bg-blue-600'
+                ? 'bg-indigo-600'
                 : job.platform === 'LinkedIn'
-                ? 'bg-blue-800'
+                ? 'bg-blue-600'
+                : job.platform === 'Zalo'
+                ? 'bg-cyan-600'
                 : 'bg-emerald-600'
             }`}>
               {job.recruiter_name ? job.recruiter_name.substring(0, 2) : 'HR'}

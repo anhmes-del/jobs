@@ -190,6 +190,8 @@ def run_live_scrape(query: str, platform: str = "All") -> list:
         search_query = f"site:linkedin.com/posts \"{query}\" hiring"
     elif platform == "Facebook":
         search_query = f"site:facebook.com \"{query}\" recruiting"
+    elif platform == "Zalo":
+        search_query = f"(site:linkedin.com/posts OR site:facebook.com) \"{query}\" (\"zalo.me/g/\" OR \"zalo.me\" OR \"zalo\") (\"recruitment\" OR \"tuyển dụng\" OR \"hiring\")"
     elif platform == "VN_Sites":
         search_query = f"(site:vietnamworks.com OR site:topcv.vn OR site:careerviet.vn OR site:vieclam24h.vn OR site:glints.com OR site:careerlink.vn OR site:joboko.com) \"{query}\" (\"renewable\" OR \"điện gió\" OR \"năng lượng\" OR \"solar\" OR \"windfarm\")"
     else:

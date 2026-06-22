@@ -14,6 +14,8 @@ export default function App() {
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400';
       case 'Facebook':
         return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400';
+      case 'Zalo':
+        return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950/30 dark:text-cyan-400';
       case 'VietnamWorks':
         return 'bg-orange-100 text-orange-800 dark:bg-orange-950/30 dark:text-orange-400';
       case 'TopCV':
@@ -21,7 +23,7 @@ export default function App() {
       case 'CareerViet':
         return 'bg-rose-100 text-rose-800 dark:bg-rose-950/30 dark:text-rose-400';
       case 'Glints':
-        return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950/30 dark:text-cyan-400';
+        return 'bg-teal-100 text-teal-800 dark:bg-teal-950/30 dark:text-teal-400';
       default:
         return 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300';
     }
@@ -103,7 +105,9 @@ export default function App() {
       { id: "job_011", title: "Wind Project Manager (Renewables Portfolio)", company: "Vestas Wind Systems", platform: "LinkedIn", location: "Hanoi, Vietnam", role: "Project Manager", recruiter_name: "Nguyen Minh Thu (Senior Talent Acquisition)", recruiter_profile: "#", post_url: "#", post_date: "Jun 20, 2026", raw_text: "Vestas is looking for a Wind Project Manager.", key_requirements: ["8+ years project management", "PMP certified"], project_type: "Onshore", salary: "USD 5,000 - 7,000", contact_info: "nmt-recruitment@vestas.com" },
       { id: "job_012", title: "Giám Đốc Dự Án Xây Dựng Hạ Tầng Điện Gió", company: "Trung Nam Group", platform: "VietnamWorks", location: "Ninh Thuan, Vietnam", role: "Project Manager", recruiter_name: "Le Hoang Nam (HR Lead)", recruiter_profile: "#", post_url: "#", post_date: "Jun 18, 2026", raw_text: "Trung Nam Group tuyển Giám Đốc Dự Án điện gió.", key_requirements: ["5+ years wind power PM", "Hạ tầng kỹ thuật & pháp lý"], project_type: "Onshore", salary: "Up to 80,000,000 VND", contact_info: "tuyendung@trungnamgroup.com.vn" },
       { id: "job_015", title: "HSE Manager (Dự Án Điện Gió Ngoài Khơi)", company: "PTSC", platform: "LinkedIn", location: "Vung Tau, Vietnam", role: "HSE", recruiter_name: "Vu Van Hieu (Talent Acquisition)", recruiter_profile: "#", post_url: "#", post_date: "Jun 19, 2026", raw_text: "Lead HSE Manager for our offshore wind farm.", key_requirements: ["5+ years offshore HSE", "NEBOSH certified"], project_type: "Offshore", salary: "Negotiable", contact_info: "recruitment@ptsc.com.vn" },
-      { id: "job_016", title: "Kỹ Sư An Toàn Lao Động (HSE Officer)", company: "Fecon Corporation", platform: "TopCV", location: "Quang Tri, Vietnam", role: "HSE", recruiter_name: "Phan Hoang Minh (HR)", recruiter_profile: "#", post_url: "#", post_date: "Jun 17, 2026", raw_text: "FECON cần tuyển Kỹ sư An toàn Lao động.", key_requirements: ["3+ years construction safety", "HSE state certificate"], project_type: "Onshore", salary: "25 - 35M VND", contact_info: "tuyendung@fecon.com.vn" }
+      { id: "job_016", title: "Kỹ Sư An Toàn Lao Động (HSE Officer)", company: "Fecon Corporation", platform: "TopCV", location: "Quang Tri, Vietnam", role: "HSE", recruiter_name: "Phan Hoang Minh (HR)", recruiter_profile: "#", post_url: "#", post_date: "Jun 17, 2026", raw_text: "FECON cần tuyển Kỹ sư An toàn Lao động.", key_requirements: ["3+ years construction safety", "HSE state certificate"], project_type: "Onshore", salary: "25 - 35M VND", contact_info: "tuyendung@fecon.com.vn" },
+      { id: "job_019", title: "Chỉ Huy Trưởng / Site Manager Điện Gió (Nhóm Zalo)", company: "Trung Nam Group", platform: "Zalo", location: "Ninh Thuan, Vietnam", role: "Site Manager", recruiter_name: "Le Hoang Nam (Nhóm Zalo Tuyển Dụng)", recruiter_profile: "#", post_url: "#", post_date: "Jun 21, 2026", raw_text: "Trung Nam cần tuyển Chỉ huy trưởng công trường điện gió Ninh Thuận.", key_requirements: ["4+ years wind farm site manager", "BOP & Civil works"], project_type: "Onshore", salary: "Negotiable", contact_info: "tuyendung@trungnamgroup.com.vn", zalo: "0933111222" },
+      { id: "job_020", title: "Project Manager BOP (Liên hệ Zalo Mr. Nam)", company: "Fecon Corporation", platform: "Zalo", location: "Quang Tri, Vietnam", role: "Project Manager", recruiter_name: "Phan Hoang Minh (Tuyển Dụng Zalo)", recruiter_profile: "#", post_url: "#", post_date: "Jun 22, 2026", raw_text: "FECON tuyển gấp Project Manager điều hành thi công BOP điện gió Quảng Trị.", key_requirements: ["6+ years infrastructure PM", "FIDIC contracts"], project_type: "Onshore", salary: "Negotiable", contact_info: "tuyendung@fecon.com.vn", zalo: "0984123456" }
     ];
 
     let filtered = baseMockJobs;
@@ -118,9 +122,9 @@ export default function App() {
 
     setStats({
       total: baseMockJobs.length,
-      platforms: [{ name: 'LinkedIn', value: 3 }, { name: 'Facebook', value: 1 }, { name: 'TopCV', value: 1 }, { name: 'VietnamWorks', value: 1 }],
-      locations: [{ name: 'Tra Vinh', value: 2 }, { name: 'Hanoi', value: 1 }, { name: 'Ninh Thuan', value: 1 }, { name: 'Vung Tau', value: 1 }, { name: 'Quang Tri', value: 1 }],
-      project_types: [{ name: 'Nearshore', value: 2 }, { name: 'Onshore', value: 3 }, { name: 'Offshore', value: 1 }]
+      platforms: [{ name: 'LinkedIn', value: 3 }, { name: 'Facebook', value: 1 }, { name: 'Zalo', value: 2 }, { name: 'TopCV', value: 1 }, { name: 'VietnamWorks', value: 1 }],
+      locations: [{ name: 'Tra Vinh', value: 2 }, { name: 'Hanoi', value: 1 }, { name: 'Ninh Thuan', value: 2 }, { name: 'Vung Tau', value: 1 }, { name: 'Quang Tri', value: 2 }],
+      project_types: [{ name: 'Nearshore', value: 2 }, { name: 'Onshore', value: 5 }, { name: 'Offshore', value: 1 }]
     });
   };
 
@@ -272,7 +276,7 @@ export default function App() {
 
       <main className="max-w-[1600px] mx-auto p-6">
         {/* KPI Dashboard Statistics Row */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
           <div className="bg-white dark:bg-[#0c0c0f] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 shadow-sm flex items-center gap-4">
             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
               <Database size={20} />
@@ -308,6 +312,18 @@ export default function App() {
           </div>
 
           <div className="bg-white dark:bg-[#0c0c0f] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 shadow-sm flex items-center gap-4">
+            <div className="p-3 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 rounded-lg">
+              <span className="text-sm font-bold font-mono">ZL</span>
+            </div>
+            <div>
+              <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Zalo Sourced</div>
+              <div className="text-2xl font-bold font-mono">
+                {stats?.platforms.find(p => p.name === 'Zalo')?.value || 0}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-[#0c0c0f] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 shadow-sm flex items-center gap-4">
             <div className="p-3 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-lg">
               <span className="text-sm font-bold font-mono">VN</span>
             </div>
@@ -315,7 +331,7 @@ export default function App() {
               <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">VN Boards Sourced</div>
               <div className="text-2xl font-bold font-mono">
                 {stats?.platforms.reduce((acc, curr) => {
-                  if (curr.name !== 'LinkedIn' && curr.name !== 'Facebook') {
+                  if (curr.name !== 'LinkedIn' && curr.name !== 'Facebook' && curr.name !== 'Zalo') {
                     return acc + curr.value;
                   }
                   return acc;
@@ -366,6 +382,7 @@ export default function App() {
                 <option value="All">All Platforms</option>
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="Facebook">Facebook</option>
+                <option value="Zalo">Zalo</option>
                 <option value="VietnamWorks">VietnamWorks</option>
                 <option value="TopCV">TopCV</option>
                 <option value="CareerViet">CareerViet</option>
@@ -587,6 +604,7 @@ export default function App() {
                           <option value="All">All Platforms</option>
                           <option value="LinkedIn">LinkedIn Priority</option>
                           <option value="Facebook">Facebook Priority</option>
+                          <option value="Zalo">Zalo Priority</option>
                           <option value="VN_Sites">Vietnam Job Boards (VietnamWorks, TopCV, CareerViet...)</option>
                         </select>
                       </div>

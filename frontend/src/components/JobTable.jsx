@@ -36,6 +36,8 @@ export default function JobTable({ jobs, selectedJobId, onSelectJob }) {
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400';
       case 'Facebook':
         return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400';
+      case 'Zalo':
+        return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950/30 dark:text-cyan-400';
       case 'VietnamWorks':
         return 'bg-orange-100 text-orange-800 dark:bg-orange-950/30 dark:text-orange-400';
       case 'TopCV':
@@ -43,7 +45,7 @@ export default function JobTable({ jobs, selectedJobId, onSelectJob }) {
       case 'CareerViet':
         return 'bg-rose-100 text-rose-800 dark:bg-rose-950/30 dark:text-rose-400';
       case 'Glints':
-        return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950/30 dark:text-cyan-400';
+        return 'bg-teal-100 text-teal-800 dark:bg-teal-950/30 dark:text-teal-400';
       default:
         return 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300';
     }
