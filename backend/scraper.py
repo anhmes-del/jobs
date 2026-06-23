@@ -3,7 +3,7 @@ import subprocess
 import re
 from datetime import datetime
 
-def parse_exa_results(raw_text: str) -> list:
+def parse_exa_results(raw_text: str, requested_platform: str = "All") -> list:
     # Split results by the markdown separator
     blocks = raw_text.split("\n---\n")
     jobs = []
@@ -25,10 +25,12 @@ def parse_exa_results(raw_text: str) -> list:
         title = title_match.group(1).strip()
         url = url_match.group(1).strip()
         
-        # Determine platform based on domain
+        # Determine platform based on domain and context
         platform = "Other"
         url_lower = url.lower()
-        if "linkedin.com" in url_lower:
+        if requested_platform == "Zalo" or "zalo.me" in url_lower or "zalo.me" in highlights.lower():
+            platform = "Zalo"
+        elif "linkedin.com" in url_lower:
             platform = "LinkedIn"
         elif "facebook.com" in url_lower:
             platform = "Facebook"
@@ -218,7 +220,7 @@ def run_live_scrape(query: str, platform: str = "All") -> list:
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", shell=True, timeout=25)
         if r.returncode == 0:
-            return parse_exa_results(r.stdout)
+            return parse_exa_results(r.stdout, platform)
         else:
             print("mcporter failed:", r.stderr)
             return []

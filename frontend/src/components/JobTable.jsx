@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ExternalLink } from 'lucide-react';
 
 export default function JobTable({ jobs, selectedJobId, onSelectJob }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
+
+  // Reset page to 1 whenever the filtered jobs list changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [jobs]);
 
   const totalPages = Math.ceil(jobs.length / itemsPerPage) || 1;
   const startIndex = (currentPage - 1) * itemsPerPage;

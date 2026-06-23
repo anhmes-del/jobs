@@ -134,7 +134,7 @@ export default function DashboardCharts({ stats, isDark }) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Platform Chart Card */}
       <div className="bg-white dark:bg-[#0c0c0f] rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm p-5 flex flex-col justify-between">
         <div>

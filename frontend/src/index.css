@@ -2,19 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @layer base {
   body {
     @apply bg-zinc-50 text-zinc-900 transition-colors duration-200;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
   body.dark {
     @apply bg-[#09090b] text-zinc-50;
   }
 }
 
-/* Custom premium scrollbar styling */
+/* ── Drawer Slide-in Animation ── */
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.drawer-enter {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.drawer-exit {
+  animation: slideOutRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.backdrop-enter {
+  animation: fadeIn 0.25s ease forwards;
+}
+.backdrop-exit {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+/* ── Backdrop blur ── */
+.drawer-backdrop {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── Bottom Panel slide-up ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel-enter {
+  animation: slideUp 0.3s ease forwards;
+}
+
+/* ── Custom premium scrollbar styling ── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -36,4 +85,25 @@
 
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
+}
+
+/* ── Pulse glow for live indicator ── */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+}
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* ── Subtle hover lift ── */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.dark .hover-lift:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
