@@ -63,6 +63,12 @@ export default function App() {
   const [scraperLoading, setScraperLoading] = useState(false);
   const [addedJobsCount, setAddedJobsCount] = useState(0);
 
+  // Scrapling Scraper State
+  const [scraplingResults, setScraplingResults] = useState([]);
+  const [scraplingLoading, setScraplingLoading] = useState(false);
+  const [scraplingMetrics, setScraplingMetrics] = useState(null);
+  const [agentReachMetrics, setAgentReachMetrics] = useState(null);
+
   // Initialize theme
   useEffect(() => {
     const root = window.document.documentElement;
@@ -164,19 +170,54 @@ export default function App() {
 
   // Run live scrape calling FastAPI /api/scrape
   const handleScrape = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setScraperLoading(true);
+    const start = Date.now();
     try {
       const res = await axios.post(`${API_BASE}/api/scrape`, {
         query: scraperQuery,
         platform: scraperPlatform
       });
       setScraperResults(res.data);
+      setAgentReachMetrics({
+        postings_found: res.data.length,
+        speed_ms: Date.now() - start,
+        success_rate: 100
+      });
     } catch (err) {
       console.error("Error scraping data:", err);
       alert("Failed to connect to scraper API.");
+      setAgentReachMetrics({
+        postings_found: 0,
+        speed_ms: Date.now() - start,
+        success_rate: 0
+      });
     } finally {
       setScraperLoading(false);
+    }
+  };
+
+  const handleScraplingScrape = async (e) => {
+    if (e) e.preventDefault();
+    setScraplingLoading(true);
+    try {
+      const res = await axios.post(`${API_BASE}/api/scrape/scrapling`, {
+        query: scraperQuery,
+        platform: scraperPlatform
+      });
+      setScraplingResults(res.data.jobs);
+      setScraplingMetrics(res.data.metrics);
+    } catch (err) {
+      console.error("Error running Scrapling:", err);
+      setScraplingResults([]);
+      setScraplingMetrics({
+        postings_found: 0,
+        speed_ms: 150,
+        success_rate: 0,
+        error: "Failed to connect to API"
+      });
+    } finally {
+      setScraplingLoading(false);
     }
   };
 
@@ -479,7 +520,17 @@ export default function App() {
                     : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
                 }`}
               >
-                Agent Reach Scraper
+                Agent Reach
+              </button>
+              <button
+                onClick={() => setActiveTab('comparison')}
+                className={`flex-1 py-2 text-center text-xs font-semibold border-b-2 transition-all ${
+                  activeTab === 'comparison'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                }`}
+              >
+                So Sánh Bộ Quét
               </button>
             </div>
 
@@ -658,6 +709,157 @@ export default function App() {
                                 {isAlreadyAdded ? (
                                   <>
                                     <Check size={10} /> Added
+                                  </>
+                                ) : (
+                                  <>
+                                    <Plus size={10} /> Add to Board
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'comparison' && (
+                <div className="bg-white dark:bg-[#0c0c0f] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 shadow-sm flex flex-col h-full min-h-[450px]">
+                  <div className="flex items-center gap-2 border-b border-zinc-100 dark:border-zinc-800 pb-3 mb-4 shrink-0">
+                    <BarChart3 size={18} className="text-blue-500" />
+                    <div className="text-sm font-semibold">So Sánh Bộ Quét (Exa vs Scrapling)</div>
+                  </div>
+
+                  {/* Settings Query & Platform */}
+                  <div className="space-y-3 mb-4 bg-zinc-50 dark:bg-zinc-900/40 p-3 rounded-lg border border-zinc-100 dark:border-zinc-800/40 shrink-0">
+                    <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Từ Khóa & Nguồn Cào Chung</div>
+                    <div className="text-xs text-zinc-600 dark:text-zinc-400">
+                      Từ khóa: <span className="font-mono text-blue-500 font-bold">"{scraperQuery}"</span> | Nguồn: <span className="font-semibold text-zinc-900 dark:text-zinc-200">{scraperPlatform === 'All' ? 'Tất cả' : scraperPlatform}</span>
+                    </div>
+                  </div>
+
+                  {/* Run Buttons */}
+                  <div className="grid grid-cols-2 gap-3 mb-4 shrink-0">
+                    <button
+                      onClick={handleScrape}
+                      disabled={scraperLoading}
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 font-medium transition-colors text-xs disabled:opacity-50 flex items-center justify-center gap-1.5 h-9"
+                    >
+                      {scraperLoading ? (
+                        <>
+                          <RefreshCw size={12} className="animate-spin" /> Chạy Exa...
+                        </>
+                      ) : (
+                        'Chạy Exa (Agent Reach)'
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={handleScraplingScrape}
+                      disabled={scraplingLoading}
+                      className="bg-purple-600 hover:bg-purple-700 text-white rounded-lg py-2 font-medium transition-colors text-xs disabled:opacity-50 flex items-center justify-center gap-1.5 h-9"
+                    >
+                      {scraplingLoading ? (
+                        <>
+                          <RefreshCw size={12} className="animate-spin" /> Chạy Scrapling...
+                        </>
+                      ) : (
+                        'Chạy Scrapling Scraper'
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Metrics Comparison Grid */}
+                  <div className="grid grid-cols-2 gap-3 mb-4 shrink-0">
+                    {/* Exa Metrics */}
+                    <div className="bg-blue-50/30 dark:bg-blue-950/10 border border-blue-100/50 dark:border-blue-900/20 rounded-lg p-3">
+                      <div className="text-[10px] font-bold text-blue-500 uppercase tracking-wider mb-2">Bộ Quét Exa (Agent Reach)</div>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-zinc-500">Số tin cào:</span>
+                          <span className="font-bold font-mono">{agentReachMetrics ? agentReachMetrics.postings_found : '--'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-zinc-500">Tốc độ:</span>
+                          <span className="font-bold font-mono text-amber-500">{agentReachMetrics ? `${agentReachMetrics.speed_ms} ms` : '--'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-zinc-500">Thành công:</span>
+                          <span className="font-bold font-mono text-emerald-500">{agentReachMetrics ? `${agentReachMetrics.success_rate}%` : '--'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Scrapling Metrics */}
+                    <div className="bg-purple-50/30 dark:bg-purple-950/10 border border-purple-100/50 dark:border-purple-900/20 rounded-lg p-3">
+                      <div className="text-[10px] font-bold text-purple-500 uppercase tracking-wider mb-2">Bộ Quét Scrapling (GitHub)</div>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-zinc-500">Số tin cào:</span>
+                          <span className="font-bold font-mono">{scraplingMetrics ? scraplingMetrics.postings_found : '--'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-zinc-500">Tốc độ:</span>
+                          <span className="font-bold font-mono text-amber-500">{scraplingMetrics ? `${scraplingMetrics.speed_ms} ms` : '--'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-zinc-500">Thành công:</span>
+                          <span className="font-bold font-mono text-emerald-500">{scraplingMetrics ? `${scraplingMetrics.success_rate}%` : '--'}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Scrapling Results List */}
+                  <div className="flex-grow overflow-y-auto space-y-3 max-h-[160px] pr-1">
+                    <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1">Kết Quả Từ Bộ Quét Scrapling</div>
+                    {scraplingResults.length === 0 ? (
+                      <div className="text-center text-xs text-zinc-500 dark:text-zinc-400 py-6 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg">
+                        {scraplingLoading ? 'Scrapling đang cào dữ liệu...' : 'Click "Chạy Scrapling Scraper" để xem tin cào bằng Scrapling.'}
+                      </div>
+                    ) : (
+                      scraplingResults.map((job) => {
+                        const isAlreadyAdded = jobs.some(j => j.id === job.id);
+                        return (
+                          <div
+                            key={job.id}
+                            className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/40 rounded-lg p-3 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <div>
+                                <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 leading-snug">
+                                  {job.title}
+                                </h4>
+                                <div className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
+                                  {job.company} • {job.location}
+                                </div>
+                              </div>
+                              <span className={`inline-flex px-1.5 py-0.5 rounded text-[8px] font-bold ${getPlatformBadgeClass(job.platform)}`}>
+                                {job.platform}
+                              </span>
+                            </div>
+
+                            <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-2">
+                              {job.raw_text}
+                            </p>
+
+                            <div className="mt-3 flex items-center justify-between">
+                              <span className="text-[9px] font-mono text-zinc-400">{job.post_date}</span>
+                              
+                              <button
+                                onClick={() => handleAddScrapedJob(job)}
+                                disabled={isAlreadyAdded}
+                                className={`flex items-center gap-1 px-2.5 py-1 rounded text-[10px] font-semibold transition-colors ${
+                                  isAlreadyAdded
+                                    ? 'bg-zinc-100 text-zinc-400 dark:bg-zinc-800/50 dark:text-zinc-600 cursor-not-allowed'
+                                    : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
+                                }`}
+                              >
+                                {isAlreadyAdded ? (
+                                  <>
+                                    <Check size={10} /> Đã Thêm
                                   </>
                                 ) : (
                                   <>

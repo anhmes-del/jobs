@@ -405,3 +405,12 @@ def scrape_jobs_endpoint(payload: dict):
                 ]
         
     return scraped
+
+@app.post("/api/scrape/scrapling")
+def scrape_scrapling_endpoint(payload: dict):
+    from backend.scrapling_scraper import run_scrapling_scrape
+    query = payload.get("query", "site manager renewable")
+    platform = payload.get("platform", "All")
+    
+    return run_scrapling_scrape(query, platform)
+
