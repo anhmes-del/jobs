@@ -186,6 +186,24 @@ export default function App() {
         speed_ms: Date.now() - start,
         success_rate: 100
       });
+
+      // Auto-push to dashboard
+      if (res.data && res.data.length > 0) {
+        let addedAny = false;
+        for (const job of res.data) {
+          if (!jobs.some(j => j.id === job.id)) {
+            try {
+              await axios.post(`${API_BASE}/api/jobs`, job);
+              addedAny = true;
+            } catch (err) {
+              console.warn("Failed to auto-add job to backend:", err);
+            }
+          }
+        }
+        if (addedAny) {
+          fetchData();
+        }
+      }
     } catch (err) {
       console.error("Error scraping data:", err);
       alert("Failed to connect to scraper API.");
@@ -209,6 +227,24 @@ export default function App() {
       });
       setScraplingResults(res.data.jobs);
       setScraplingMetrics(res.data.metrics);
+
+      // Auto-push to dashboard
+      if (res.data.jobs && res.data.jobs.length > 0) {
+        let addedAny = false;
+        for (const job of res.data.jobs) {
+          if (!jobs.some(j => j.id === job.id)) {
+            try {
+              await axios.post(`${API_BASE}/api/jobs`, job);
+              addedAny = true;
+            } catch (err) {
+              console.warn("Failed to auto-add job to backend:", err);
+            }
+          }
+        }
+        if (addedAny) {
+          fetchData();
+        }
+      }
     } catch (err) {
       console.error("Error running Scrapling:", err);
       setScraplingResults([]);
