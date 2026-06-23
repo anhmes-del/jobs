@@ -24,6 +24,16 @@ export default function App() {
         return 'bg-rose-100 text-rose-800 dark:bg-rose-950/30 dark:text-rose-400';
       case 'Glints':
         return 'bg-teal-100 text-teal-800 dark:bg-teal-950/30 dark:text-teal-400';
+      case 'JobsGO':
+        return 'bg-violet-100 text-violet-800 dark:bg-violet-950/30 dark:text-violet-400';
+      case 'CareerLink':
+        return 'bg-amber-100 text-amber-800 dark:bg-amber-950/30 dark:text-amber-400';
+      case 'Indeed':
+        return 'bg-sky-100 text-sky-800 dark:bg-sky-950/30 dark:text-sky-400';
+      case 'TopDev':
+        return 'bg-red-100 text-red-800 dark:bg-red-950/30 dark:text-red-400';
+      case 'Timviec365':
+        return 'bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-950/30 dark:text-fuchsia-400';
       default:
         return 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300';
     }

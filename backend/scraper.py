@@ -38,12 +38,20 @@ def parse_exa_results(raw_text: str) -> list:
             platform = "TopCV"
         elif "careerviet.vn" in url_lower:
             platform = "CareerViet"
-        elif "vieclam24h.vn" in url_lower:
-            platform = "ViecLam24h"
+        elif "jobsgo.vn" in url_lower:
+            platform = "JobsGO"
+        elif "indeed.com" in url_lower or "indeed.com.vn" in url_lower or "vn.indeed.com" in url_lower:
+            platform = "Indeed"
         elif "glints.com" in url_lower:
             platform = "Glints"
         elif "careerlink.vn" in url_lower:
             platform = "CareerLink"
+        elif "topdev.vn" in url_lower:
+            platform = "TopDev"
+        elif "timviec365.vn" in url_lower or "timviec365.com" in url_lower:
+            platform = "Timviec365"
+        elif "vieclam24h.vn" in url_lower:
+            platform = "ViecLam24h"
         elif "joboko.com" in url_lower:
             platform = "Joboko"
             
@@ -195,7 +203,7 @@ def run_live_scrape(query: str, platform: str = "All") -> list:
     elif platform == "Zalo":
         search_query = f"(site:linkedin.com/posts OR site:facebook.com) \"{query}\" (\"zalo.me/g/\" OR \"zalo.me\" OR \"zalo\") (\"recruitment\" OR \"tuyển dụng\" OR \"hiring\")"
     elif platform == "VN_Sites":
-        search_query = f"(site:vietnamworks.com OR site:topcv.vn OR site:careerviet.vn OR site:vieclam24h.vn OR site:glints.com OR site:careerlink.vn OR site:joboko.com) \"{query}\" (\"renewable\" OR \"điện gió\" OR \"năng lượng\" OR \"solar\" OR \"windfarm\")"
+        search_query = f"(site:vietnamworks.com OR site:topcv.vn OR site:careerviet.vn OR site:jobsgo.vn OR site:careerlink.vn OR site:vn.indeed.com OR site:indeed.com OR site:glints.com OR site:topdev.vn OR site:timviec365.vn OR site:timviec365.com) \"{query}\" (\"renewable\" OR \"điện gió\" OR \"năng lượng\" OR \"solar\" OR \"windfarm\")"
     else:
         search_query = f"site:linkedin.com/posts OR site:facebook.com \"{query}\" (hiring OR recruitment)"
         
