@@ -6,7 +6,9 @@ import JobTable from './components/JobTable';
 import DetailsPanel from './components/DetailsPanel';
 import ReactECharts from 'echarts-for-react';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8000'
+  : '/_/backend';
 
 export default function App() {
   const getPlatformBadgeClass = (platform) => {
