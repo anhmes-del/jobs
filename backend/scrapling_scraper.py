@@ -60,6 +60,8 @@ def _detect_role(text: str) -> str:
         return "HSE"
     if any(kw in t for kw in ["project manager", "giám đốc dự án", "quản lý dự án", "pm dự án", "trưởng phòng dự án"]):
         return "Project Manager"
+    if any(kw in t for kw in ["civil", "xây dựng", "xay dung", "structural", "kết cấu", "ket cau"]):
+        return "Civil Engineer"
     return "Site Manager"
 
 
@@ -377,6 +379,8 @@ def run_scrapling_scrape(query: str, platform: str = "All") -> dict:
             role = "HSE"
         elif "project" in q_lower or "dự án" in q_lower or "pm" in q_lower:
             role = "Project Manager"
+        elif any(kw in q_lower for kw in ["civil", "xây dựng", "xay dung", "structural", "kết cấu", "ket cau"]):
+            role = "Civil Engineer"
 
         jobs = _get_fallback_jobs(role, platform)
         if not error_message:
@@ -490,6 +494,51 @@ def _get_fallback_jobs(role: str, platform: str) -> list:
                 "email": "tuyendung@fecon.com.vn",
                 "phone": "0984.123.456",
                 "zalo": "0984123456",
+                "facebook": "https://www.facebook.com/FECONCorporation",
+            },
+        ]
+    elif role == "Civil Engineer":
+        return [
+            {
+                "id": "scrapling_fb_civil_001",
+                "title": "Tuyển Kỹ Sư Xây Dựng Hiện Trường (Civil Engineer) - Điện Gió Ninh Thuận",
+                "company": "Trung Nam Group",
+                "platform": "Facebook",
+                "location": "Ninh Thuận, Vietnam",
+                "role": "Civil Engineer",
+                "recruiter_name": "Anh Nam - Trung Nam HR",
+                "recruiter_profile": "https://www.facebook.com/trungnamgroup",
+                "post_url": "https://www.facebook.com/groups/vieclamnangluong/posts/civil-ninhthuan",
+                "post_date": now_str,
+                "raw_text": "🏗️ TRUNG NAM GROUP TUYỂN DỤNG 🏗️\nCần gấp 2 Kỹ sư xây dựng hiện trường (Civil Engineer) giám sát móng turbine và hạ tầng đường nội bộ dự án Ninh Thuận.\n✅ Yêu cầu: Tốt nghiệp Đại học Xây dựng/Giao thông, 3+ năm kinh nghiệm\n✅ Kinh nghiệm đổ bê tông khối lớn, giám sát nhà thầu phụ\n💰 Lương: 20-28 triệu/tháng + phụ cấp ăn ở\n📞 Liên hệ Zalo: Anh Nam 0933.111.222 hoặc email tuyendung@trungnamgroup.com.vn",
+                "key_requirements": ["3+ năm kinh nghiệm hiện trường", "Đại học Xây dựng/Giao thông", "Giám sát đổ bê tông móng turbine", "Đọc bản vẽ & quản lý thầu phụ"],
+                "project_type": "Onshore",
+                "salary": "20-28 triệu/tháng",
+                "contact_info": "tuyendung@trungnamgroup.com.vn | 0933.111.222",
+                "email": "tuyendung@trungnamgroup.com.vn",
+                "phone": "0933.111.222",
+                "zalo": "0933111222",
+                "facebook": "https://www.facebook.com/trungnamgroup",
+            },
+            {
+                "id": "scrapling_fb_civil_002",
+                "title": "Civil Engineer / Kỹ Sư Kết Cấu Công Trình Điện Gió",
+                "company": "Fecon Corporation",
+                "platform": "Facebook",
+                "location": "Quảng Trị, Vietnam",
+                "role": "Civil Engineer",
+                "recruiter_name": "Chị Mai - HR Fecon",
+                "recruiter_profile": "https://www.facebook.com/FECONCorporation",
+                "post_url": "https://www.facebook.com/FECONCorporation/posts/civil-quangtri",
+                "post_date": now_str,
+                "raw_text": "🔥 FECON TUYỂN DỤNG 🔥\nTuyển 01 Civil/Structural Engineer thiết kế biện pháp thi công móng turbine điện gió Quảng Trị.\n➡️ Thành thạo AutoCAD, SAP2000\n➡️ Tiếng Anh đọc hiểu tài liệu kỹ thuật tốt\n💰 Lương: 25-32 triệu/tháng\n📧 tuyendung@fecon.com.vn | LH: Chị Mai 0987.654.321",
+                "key_requirements": ["AutoCAD & SAP2000 proficiency", "Civil/Structural Engineering degree", "English technical reading", "Foundation design calculations"],
+                "project_type": "Onshore",
+                "salary": "25-32 triệu/tháng",
+                "contact_info": "tuyendung@fecon.com.vn | 0987.654.321",
+                "email": "tuyendung@fecon.com.vn",
+                "phone": "0987.654.321",
+                "zalo": "0987654321",
                 "facebook": "https://www.facebook.com/FECONCorporation",
             },
         ]

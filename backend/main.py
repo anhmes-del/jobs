@@ -62,7 +62,7 @@ def get_stats():
     location_counts = {}
     company_counts = {}
     project_type_counts = {}
-    role_counts = {"Site Manager": 0, "Project Manager": 0, "HSE": 0}
+    role_counts = {"Site Manager": 0, "Project Manager": 0, "HSE": 0, "Civil Engineer": 0}
     
     for job in MOCK_JOBS:
         platform_counts[job["platform"]] = platform_counts.get(job["platform"], 0) + 1
@@ -156,6 +156,8 @@ def scrape_jobs_endpoint(payload: dict):
             fallback_role = "HSE"
         elif "project" in q_lower or "dự án" in q_lower or "pm" in q_lower:
             fallback_role = "Project Manager"
+        elif any(kw in q_lower for kw in ["civil", "xây dựng", "xay dung", "structural", "kết cấu", "ket cau"]):
+            fallback_role = "Civil Engineer"
 
         if platform == "VN_Sites":
             if fallback_role == "HSE":
@@ -229,6 +231,43 @@ def scrape_jobs_endpoint(payload: dict):
                         "key_requirements": ["6+ years civil PM experience", "BOP / Infrastructure execution", "FIDIC contracts", "Local authority liaison"],
                         "project_type": "Onshore",
                         "salary": "Negotiable (High-pay)",
+                        "contact_info": "tuyendung@fecon.com.vn"
+                    }
+                ]
+            elif fallback_role == "Civil Engineer":
+                scraped = [
+                    {
+                        "id": "scraped_vn_civil_001",
+                        "title": "Kỹ Sư Xây Dựng Hiện Trường (Civil Engineer)",
+                        "company": "Trung Nam Group",
+                        "platform": "VietnamWorks",
+                        "location": "Ninh Thuận, Vietnam",
+                        "role": "Civil Engineer",
+                        "recruiter_name": "Le Hoang Nam (HR Lead)",
+                        "recruiter_profile": "https://www.vietnamworks.com/trungnam",
+                        "post_url": "https://www.vietnamworks.com/civil-engineer-trungnam",
+                        "post_date": "Jun 22, 2026",
+                        "raw_text": "Trung Nam Group cần tuyển Kỹ sư xây dựng hiện trường phụ trách giám sát thi công móng turbine điện gió và hạ tầng đường nội bộ. Yêu cầu: Tốt nghiệp đại học chuyên ngành xây dựng dân dụng & công nghiệp, 3 năm kinh nghiệm.",
+                        "key_requirements": ["3+ years civil/structural experience", "Turbine foundation execution", "AutoCAD & construction drawings", "Site supervision"],
+                        "project_type": "Onshore",
+                        "salary": "20,000,000 - 28,000,000 VND",
+                        "contact_info": "tuyendung@trungnamgroup.com.vn"
+                    },
+                    {
+                        "id": "scraped_vn_civil_002",
+                        "title": "Kỹ Sư Kết Cấu Công Trình Điện Gió (Civil/Structural Engineer)",
+                        "company": "Fecon",
+                        "platform": "TopCV",
+                        "location": "Quảng Trị, Vietnam",
+                        "role": "Civil Engineer",
+                        "recruiter_name": "Phan Hoang Minh (Recruitment Manager)",
+                        "recruiter_profile": "https://www.topcv.vn/cong-ty/fecon",
+                        "post_url": "https://www.topcv.vn/tuyen-dung/civil-engineer-fecon",
+                        "post_date": "Jun 20, 2026",
+                        "raw_text": "FECON tuyển dụng Kỹ sư thiết kế biện pháp thi công và kết cấu móng điện gió tại Quảng Trị. Yêu cầu: Sử dụng thành thạo SAP2000, AutoCAD, tiếng Anh đọc hiểu tài liệu tốt.",
+                        "key_requirements": ["SAP2000 & AutoCAD proficiency", "Foundation design calculations", "English reading comprehension", "2+ years experience"],
+                        "project_type": "Onshore",
+                        "salary": "25,000,000 - 32,000,000 VND",
                         "contact_info": "tuyendung@fecon.com.vn"
                     }
                 ]
@@ -318,6 +357,30 @@ def scrape_jobs_endpoint(payload: dict):
                         "facebook": "N/A"
                     }
                 ]
+            elif fallback_role == "Civil Engineer":
+                scraped = [
+                    {
+                        "id": "scraped_zalo_civil_001",
+                        "title": "Kỹ Sư Xây Dựng Hiện Trường (Nhóm Zalo Xây Dựng Điện Gió)",
+                        "company": "Trung Nam Group",
+                        "platform": "Zalo",
+                        "location": "Ninh Thuận, Vietnam",
+                        "role": "Civil Engineer",
+                        "recruiter_name": "Le Hoang Nam (Nhóm Zalo Tuyển Dụng)",
+                        "recruiter_profile": "https://zalo.me/g/diengio-trungnam",
+                        "post_url": "https://zalo.me/g/diengio-trungnam",
+                        "post_date": "Jun 22, 2026",
+                        "raw_text": "Cần gấp 2 Kỹ sư xây dựng hiện trường giám sát đổ bê tông móng turbine tại Ninh Thuận. Yêu cầu có kinh nghiệm làm móng trụ điện gió, có thể nhận việc ngay. Chi tiết LH Zalo: 0933.111.222",
+                        "key_requirements": ["Turbine foundation concrete works", "Immediate availability", "Ninh Thuan project"],
+                        "project_type": "Onshore",
+                        "salary": "25,000,000 VND",
+                        "contact_info": "tuyendung@trungnamgroup.com.vn | 0933.111.222",
+                        "email": "tuyendung@trungnamgroup.com.vn",
+                        "phone": "0933.111.222",
+                        "zalo": "0933111222",
+                        "facebook": "N/A"
+                    }
+                ]
             else:
                 scraped = [
                     {
@@ -380,6 +443,26 @@ def scrape_jobs_endpoint(payload: dict):
                         "key_requirements": ["6+ years utility solar PM", "EPC contract negotiation", "PMP certification"],
                         "project_type": "Onshore",
                         "salary": "USD 120k - 145k",
+                        "contact_info": "jobs@totalenergies.com"
+                    }
+                ]
+            elif fallback_role == "Civil Engineer":
+                scraped = [
+                    {
+                        "id": "scraped_mock_civil_001",
+                        "title": "Civil Construction Engineer (Renewables)",
+                        "company": "TotalEnergies",
+                        "platform": "LinkedIn",
+                        "location": "Dallas, Texas",
+                        "role": "Civil Engineer",
+                        "recruiter_name": "Daveon Middleton, MBA",
+                        "recruiter_profile": "https://www.linkedin.com/in/dameonmiddletonmba",
+                        "post_url": "https://www.linkedin.com/posts/dameonmiddletonmba_civil-renewables",
+                        "post_date": "Jun 22, 2026",
+                        "raw_text": "Looking for a Civil Construction Engineer to supervise site preparation, access roads, and turbine foundation installations for utility-scale wind farms.",
+                        "key_requirements": ["BS Civil Engineering", "3+ years site prep & foundation", "Renewables experience preferred"],
+                        "project_type": "Onshore",
+                        "salary": "Negotiable",
                         "contact_info": "jobs@totalenergies.com"
                     }
                 ]

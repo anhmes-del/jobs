@@ -159,6 +159,8 @@ def parse_exa_results(raw_text: str) -> list:
             role = "HSE"
         elif "project manager" in title_lower or "giám đốc dự án" in title_lower or "quản lý dự án" in title_lower or "pm" in title_lower:
             role = "Project Manager"
+        elif any(kw in title_lower or kw in highlights_lower for kw in ["civil", "xây dựng", "xay dung", "structural", "kết cấu", "ket cau"]):
+            role = "Civil Engineer"
 
         jobs.append({
             "id": f"scraped_{idx}_{int(datetime.now().timestamp())}",

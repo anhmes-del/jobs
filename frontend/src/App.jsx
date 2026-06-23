@@ -132,6 +132,8 @@ export default function App() {
       setScraperQuery('project manager construction');
     } else if (activeRoleTab === 'HSE') {
       setScraperQuery('HSE construction');
+    } else if (activeRoleTab === 'Civil Engineer') {
+      setScraperQuery('civil engineer OR "kỹ sư xây dựng"');
     }
   }, [activeRoleTab]);
 
@@ -459,7 +461,8 @@ export default function App() {
                 { id: 'All', label: 'All Construction' },
                 { id: 'Site Manager', label: 'Site Managers' },
                 { id: 'Project Manager', label: 'Project Managers' },
-                { id: 'HSE', label: 'HSE Officers' }
+                { id: 'HSE', label: 'HSE Officers' },
+                { id: 'Civil Engineer', label: 'Civil Engineers' }
               ].map(tab => {
                 const isActive = activeRoleTab === tab.id;
                 return (
