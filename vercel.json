@@ -12,10 +12,17 @@
       "use": "@vercel/python"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/_/backend/(.*)",
-      "destination": "/backend/main.py"
+      "src": "/_/backend/(.*)",
+      "dest": "/backend/main.py"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/dist/index.html"
     }
   ]
 }

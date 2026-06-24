@@ -197,9 +197,13 @@ def run_scrapling_scrape(query: str, platform: str = "All") -> dict:
             pass
         
         if not use_stealthy:
-            from scrapling import Fetcher
-            fetcher = Fetcher
-            fetcher_used = "Fetcher"
+            try:
+                from scrapling import Fetcher
+                fetcher = Fetcher
+                fetcher_used = "Fetcher"
+            except ImportError:
+                # scrapling not installed at all (e.g., Vercel serverless)
+                raise ImportError("scrapling package not available in this environment")
         else:
             # Ensure we are logged in before hitting search URLs
             print("[Scrapling] Ensuring Facebook session is active...")

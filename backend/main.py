@@ -24,9 +24,14 @@ class VercelPrefixMiddleware:
         if scope["type"] == "http":
             path = scope.get("path", "")
             if path.startswith("/_/backend"):
-                scope["path"] = path[len("/_/backend"):]
+                new_path = path[len("/_/backend"):] or "/"
+                scope["path"] = new_path
                 if "raw_path" in scope:
-                    scope["raw_path"] = scope["raw_path"][len("/_/backend"):]
+                    raw = scope["raw_path"]
+                    prefix = b"/_/backend"
+                    if raw.startswith(prefix):
+                        new_raw = raw[len(prefix):] or b"/"
+                        scope["raw_path"] = new_raw
         await self.app(scope, receive, send)
 
 app = FastAPI(title="Wind Farm Job Tracker API")
