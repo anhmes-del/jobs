@@ -16,7 +16,21 @@ from typing import Optional, List
 from backend.mock_data import MOCK_JOBS
 import re
 
+class VercelPrefixMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http":
+            path = scope.get("path", "")
+            if path.startswith("/_/backend"):
+                scope["path"] = path[len("/_/backend"):]
+                if "raw_path" in scope:
+                    scope["raw_path"] = scope["raw_path"][len("/_/backend"):]
+        await self.app(scope, receive, send)
+
 app = FastAPI(title="Wind Farm Job Tracker API")
+app.add_middleware(VercelPrefixMiddleware)
 
 # Enable CORS for frontend development
 app.add_middleware(
