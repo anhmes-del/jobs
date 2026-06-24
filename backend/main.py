@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*-
+import sys
+import os
+import types
+
+# Ensure the 'backend' package is importable when running inside Vercel's serverless environment
+if "backend" not in sys.modules:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    m = types.ModuleType("backend")
+    m.__path__ = [current_dir]
+    sys.modules["backend"] = m
+
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List
