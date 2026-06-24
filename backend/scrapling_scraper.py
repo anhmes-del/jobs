@@ -4,6 +4,7 @@ Scrapling-based Facebook scraper for Vietnamese construction/renewable energy jo
 Uses Scrapling's StealthyFetcher (Playwright-backed) to bypass anti-bot detection
 on Facebook public group/page posts.
 """
+import os
 import time
 import re
 import hashlib
@@ -134,24 +135,25 @@ def _extract_requirements(text: str) -> list:
 
 
 def _fb_login_action(page):
-    """Page action to log into Facebook if we hit a login wall."""
+    """Page action to log into Facebook if we hit a login wall.
+    Credentials are read from environment variables (not hardcoded).
+    """
+    fb_email = os.environ.get("FB_EMAIL")
+    fb_pass = os.environ.get("FB_PASS")
+    if not fb_email or not fb_pass:
+        print("  [Scrapling] FB_EMAIL/FB_PASS not set — skipping login")
+        return
     try:
-        # Check if email input exists on the page
-        # We wait briefly so we don't delay already logged-in sessions too much
         email_input = page.locator("input[name='email']")
         if email_input.is_visible(timeout=5000):
             print("  [Scrapling] Detected Facebook login wall, attempting login...")
-            email_input.fill("0941954954")
-            page.locator("input[name='pass']").fill("win310106")
-            
-            # Click the login button
+            email_input.fill(fb_email)
+            page.locator("input[name='pass']").fill(fb_pass)
             login_btn = page.locator("button[name='login']")
             if login_btn.is_visible():
                 login_btn.click()
             else:
                 page.keyboard.press("Enter")
-                
-            # Wait for login to complete and the redirect to happen
             page.wait_for_timeout(10000)
             print("  [Scrapling] Login attempt completed.")
         else:

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import subprocess
 import re
 import requests
 from datetime import datetime
@@ -254,22 +253,7 @@ def run_live_scrape(query: str, platform: str = "All") -> list:
         except Exception as e:
             print("Direct Exa API Exception:", e)
 
-    # Fallback to local mcporter command-line execution (for local development)
-    cmd = [
-        "mcporter",
-        "call",
-        "exa.web_search_exa",
-        f"query={search_query}",
-        "numResults=8"
-    ]
-    
-    try:
-        r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", shell=True, timeout=25)
-        if r.returncode == 0:
-            return parse_exa_results(r.stdout, platform)
-        else:
-            print("mcporter failed:", r.stderr)
-            return []
-    except Exception as e:
-        print("Scraper exception:", e)
-        return []
+    # No Exa API key and no local mcporter available on Vercel
+    # -> return empty so the endpoint falls back to curated mock data
+    print("No EXA_API_KEY set and mcporter not available on Vercel — returning empty")
+    return []
