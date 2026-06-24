@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
 import subprocess
 import re
+import requests
 from datetime import datetime
 
 def parse_exa_results(raw_text: str, requested_platform: str = "All") -> list:
@@ -209,6 +211,48 @@ def run_live_scrape(query: str, platform: str = "All") -> list:
     else:
         search_query = f"site:linkedin.com/posts OR site:facebook.com \"{query}\" (hiring OR recruitment)"
         
+    # If EXA_API_KEY is available (on Vercel/Production), call Exa API directly
+    api_key = os.environ.get("EXA_API_KEY")
+    if api_key:
+        try:
+            print(f"Calling Exa API directly for query: {search_query}")
+            headers = {
+                "x-api-key": api_key,
+                "content-type": "application/json"
+            }
+            payload = {
+                "query": search_query,
+                "numResults": 8,
+                "text": True,
+                "highlights": True
+            }
+            response = requests.post("https://api.exa.ai/search", json=payload, headers=headers, timeout=15)
+            if response.status_code == 200:
+                data = response.json()
+                blocks = []
+                for item in data.get("results", []):
+                    title = item.get("title", "N/A")
+                    url = item.get("url", "N/A")
+                    published = item.get("publishedDate", "N/A")
+                    author = item.get("author", "N/A")
+                    
+                    highlights_list = item.get("highlights", [])
+                    if not highlights_list and "text" in item:
+                        highlights = item.get("text", "")[:400]
+                    else:
+                        highlights = "\n".join(highlights_list)
+                        
+                    block = f"Title: {title}\nURL: {url}\nPublished: {published}\nAuthor: {author}\nHighlights:\n{highlights}"
+                    blocks.append(block)
+                
+                raw_text = "\n---\n".join(blocks)
+                return parse_exa_results(raw_text, platform)
+            else:
+                print(f"Exa API failed: {response.status_code} - {response.text}")
+        except Exception as e:
+            print("Direct Exa API Exception:", e)
+
+    # Fallback to local mcporter command-line execution (for local development)
     cmd = [
         "mcporter",
         "call",
