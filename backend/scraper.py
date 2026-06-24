@@ -253,7 +253,5 @@ def run_live_scrape(query: str, platform: str = "All") -> list:
         except Exception as e:
             print("Direct Exa API Exception:", e)
 
-    # No Exa API key and no local mcporter available on Vercel
-    # -> return empty so the endpoint falls back to curated mock data
-    print("No EXA_API_KEY set and mcporter not available on Vercel — returning empty")
+    print("No EXA_API_KEY set — returning empty")
     return []
