@@ -27,6 +27,12 @@ def parse_exa_results(raw_text: str, requested_platform: str = "All") -> list:
         title = title_match.group(1).strip()
         url = url_match.group(1).strip()
         
+        # Highlights
+        highlights = ""
+        highlight_idx = block.find("Highlights:")
+        if highlight_idx != -1:
+            highlights = block[highlight_idx + len("Highlights:"):].strip()
+            
         # Determine platform based on domain and context
         platform = "Other"
         url_lower = url.lower()
@@ -72,11 +78,7 @@ def parse_exa_results(raw_text: str, requested_platform: str = "All") -> list:
             # Set a recent date if none is found
             post_date = datetime.now().strftime("%b %d, %Y")
                 
-        # Highlights
-        highlights = ""
-        highlight_idx = block.find("Highlights:")
-        if highlight_idx != -1:
-            highlights = block[highlight_idx + len("Highlights:"):].strip()
+        # Highlights already extracted early
             
         # Extract contact email using regex
         emails = re.findall(r"[\w\.-]+@[\w\.-]+\.\w+", highlights)
